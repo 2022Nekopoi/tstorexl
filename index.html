@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XL Center Online - Layanan Kartu SIM</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        xl: {
+                            blue: '#002DBB',
+                            darkblue: '#001666',
+                            vibrant: '#1E50FF',
+                            lightblue: '#EBF0FF',
+                            teal: '#00C4B4',
+                            green: '#10B981',
+                            yellow: '#FFB800',
+                            bg: '#F0F4FA'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'fade-in-up': 'fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-10px) rotate(1deg)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(14px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar & Smooth Transitions */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #F0F4FA; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+        }
+        .sim-card-shine {
+            background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.03) 50%, rgba(0,196,180,0.18) 100%);
+        }
+        .view-animate {
+            animation: fadeInUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-xl-bg text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-xl-blue selection:text-white">
+
+    <!-- Navbar / Header -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-slate-200/70 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3.5 cursor-pointer group" onclick="switchTab('replacement')">
+                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border border-slate-200/80 flex items-center justify-center shadow-md shadow-blue-900/10 relative overflow-hidden group-hover:scale-105 transition-transform duration-300 p-1">
+                    <img src="https://g.top4top.io/p_39783qegd1.png" alt="Logo T-STORE" onerror="this.onerror=null; this.src='https://placehold.co/96x96/002DBB/FFFFFF?text=T-STORE';" class="w-full h-full object-contain rounded-xl">
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold text-lg sm:text-xl bg-gradient-to-r from-xl-darkblue to-xl-vibrant bg-clip-text text-transparent tracking-tight">T-STORE • XL Center</span>
+                        <span class="bg-gradient-to-r from-xl-teal to-emerald-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow-sm tracking-wide">OFFICIAL PARTNER</span>
+                    </div>
+                    <p class="text-[11px] sm:text-xs text-slate-500 hidden sm:block font-medium">Layanan Mandiri Kartu SIM & eSIM • WA Admin: 0895-1909-7381</p>
+                </div>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <a href="https://wa.me/6289519097381?text=Halo%20Admin%20T-STORE,%20saya%20butuh%20bantuan%20layanan%20Kartu%20SIM%20XL." target="_blank" rel="noopener noreferrer" class="group flex items-center space-x-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-emerald-900/20">
+                    <i data-lucide="message-circle" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span class="hidden sm:inline">WA Admin</span>
+                </a>
+                <button onclick="switchTab('track-tiket')" class="group flex items-center space-x-2 bg-xl-lightblue/80 hover:bg-xl-blue text-xl-blue hover:text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-blue-900/20">
+                    <i data-lucide="search-check" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                    <span>Lacak Tiket</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner dengan Visual 3D SIM Card -->
+    <section class="bg-gradient-to-br from-xl-darkblue via-xl-blue to-indigo-700 text-white pt-9 pb-14 sm:pt-12 sm:pb-16 px-4 relative overflow-hidden">
+        <!-- Animated Mesh & Orbs -->
+        <div class="absolute top-0 right-10 -mt-16 w-80 h-80 rounded-full bg-xl-teal/20 blur-3xl pointer-events-none animate-pulse-slow"></div>
+        <div class="absolute bottom-0 left-1/4 -mb-20 w-72 h-72 rounded-full bg-blue-400/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div class="max-w-2xl text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 bg-white/15 backdrop-blur-md border border-white/20 rounded-full px-3.5 py-1.5 text-xs font-semibold mb-4 shadow-sm">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-xl-yellow"></i>
+                    <span>Cepat, Aman & Tanpa Antre di Gerai</span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight mb-3 leading-[1.15]">
+                    Layanan Kartu SIM <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-cyan-200">XL Digital</span>
+                </h1>
+                <p class="text-blue-100/90 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                    Solusi mandiri untuk ganti kartu hilang/rusak, reaktivasi nomor hangus, upgrade ke jaringan 4.5G, hingga migrasi eSIM langsung dari genggaman Anda.
+                </p>
+
+                <!-- Quick Stats Bar -->
+                <div class="grid grid-cols-3 gap-3 sm:gap-6 mt-6 pt-5 border-t border-white/15 max-w-md mx-auto lg:mx-0 text-left">
+                    <div>
+                        <div class="text-lg sm:text-xl font-extrabold text-white">100%</div>
+                        <div class="text-[11px] text-blue-200">Nomor & Paket Aman</div>
+                    </div>
+                    <div>
+                        <div class="text-lg sm:text-xl font-extrabold text-teal-300">&lt; 2 Jam</div>
+                        <div class="text-[11px] text-blue-200">Estimasi Verifikasi</div>
+                    </div>
+                    <div>
+                        <div class="text-lg sm:text-xl font-extrabold text-white">Gratis</div>
+                        <div class="text-[11px] text-blue-200">Biaya Admin Kartu</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Floating 3D Virtual SIM / eSIM Preview Card -->
+            <div class="hidden sm:block w-full max-w-xs lg:max-w-sm animate-float">
+                <div class="relative rounded-3xl p-6 bg-gradient-to-br from-blue-600/90 via-indigo-800/90 to-slate-900/95 border border-white/25 shadow-2xl shadow-blue-950/50 backdrop-blur-xl overflow-hidden">
+                    <div class="sim-card-shine absolute inset-0 pointer-events-none"></div>
+                    <!-- Gold SIM Chip -->
+                    <div class="flex items-center justify-between mb-6 relative z-10">
+                        <div class="w-12 h-9 rounded-lg bg-gradient-to-tr from-amber-300 via-yellow-200 to-amber-500 border border-amber-200/60 p-1.5 grid grid-cols-2 gap-1 shadow-inner">
+                            <div class="border border-amber-700/30 rounded-xs"></div>
+                            <div class="border border-amber-700/30 rounded-xs"></div>
+                            <div class="border border-amber-700/30 rounded-xs"></div>
+                            <div class="border border-amber-700/30 rounded-xs"></div>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <span id="preview-badge" class="text-[10px] font-bold uppercase tracking-wider bg-xl-teal/25 text-teal-200 border border-teal-300/30 px-2.5 py-1 rounded-full">
+                                4.5G LTE / eSIM
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Live Number Display -->
+                    <div class="relative z-10 mb-5">
+                        <div class="text-[10px] uppercase tracking-widest text-blue-200/80 font-semibold">Nomor Pelanggan XL</div>
+                        <div id="live-card-number" class="text-xl font-mono font-extrabold tracking-wider text-white mt-0.5">
+                            +62 817-XXXX-XXXX
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs text-blue-200/90 border-t border-white/15 pt-3.5 relative z-10">
+                        <span id="live-card-service" class="font-semibold text-teal-300">Ganti Kartu SIM</span>
+                        <div class="flex items-center space-x-1.5">
+                            <img src="https://g.top4top.io/p_39783qegd1.png" alt="T-STORE" onerror="this.style.display='none'" class="w-5 h-5 object-contain rounded bg-white p-0.5">
+                            <span class="font-black text-white tracking-tighter text-base">T-STORE × XL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Tabs (Service Selector) -->
+    <div class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+        <div class="glass-card rounded-2xl shadow-xl shadow-slate-300/50 p-2.5 border border-white grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            
+            <!-- Tab 1: Replacement -->
+            <button id="tab-replacement" onclick="switchTab('replacement')" class="service-tab group flex flex-col sm:flex-row items-center justify-center sm:justify-start space-y-1.5 sm:space-y-0 sm:space-x-3 p-3.5 rounded-xl text-left transition-all duration-300 bg-gradient-to-r from-xl-blue to-xl-vibrant text-white shadow-lg shadow-blue-900/25">
+                <div class="p-2.5 rounded-xl bg-white/20 transition-transform group-hover:scale-110">
+                    <i data-lucide="sim-card" class="w-5 h-5"></i>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="font-bold text-xs sm:text-sm leading-tight">Ganti Kartu</div>
+                    <div class="text-[10px] opacity-85 hidden md:block mt-0.5">Hilang / Rusak</div>
+                </div>
+            </button>
+
+            <!-- Tab 2: Reactivation -->
+            <button id="tab-reactivation" onclick="switchTab('reactivation')" class="service-tab group flex flex-col sm:flex-row items-center justify-center sm:justify-start space-y-1.5 sm:space-y-0 sm:space-x-3 p-3.5 rounded-xl text-left transition-all duration-300 text-slate-600 hover:bg-xl-lightblue/60 hover:text-xl-blue">
+                <div class="p-2.5 rounded-xl bg-slate-100 text-xl-blue tab-icon-bg transition-transform group-hover:scale-110">
+                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="font-bold text-xs sm:text-sm leading-tight">Reaktivasi</div>
+                    <div class="text-[10px] opacity-75 hidden md:block mt-0.5">Kartu Hangus</div>
+                </div>
+            </button>
+
+            <!-- Tab 3: Upgrade -->
+            <button id="tab-upgrade" onclick="switchTab('upgrade')" class="service-tab group flex flex-col sm:flex-row items-center justify-center sm:justify-start space-y-1.5 sm:space-y-0 sm:space-x-3 p-3.5 rounded-xl text-left transition-all duration-300 text-slate-600 hover:bg-xl-lightblue/60 hover:text-xl-blue">
+                <div class="p-2.5 rounded-xl bg-slate-100 text-xl-blue tab-icon-bg transition-transform group-hover:scale-110">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="font-bold text-xs sm:text-sm leading-tight">Upgrade 4G</div>
+                    <div class="text-[10px] opacity-75 hidden md:block mt-0.5">Kartu 3G ke 4G</div>
+                </div>
+            </button>
+
+            <!-- Tab 4: Transfer eSIM -->
+            <button id="tab-transfer-esim" onclick="switchTab('transfer-esim')" class="service-tab group flex flex-col sm:flex-row items-center justify-center sm:justify-start space-y-1.5 sm:space-y-0 sm:space-x-3 p-3.5 rounded-xl text-left transition-all duration-300 text-slate-600 hover:bg-xl-lightblue/60 hover:text-xl-blue">
+                <div class="p-2.5 rounded-xl bg-slate-100 text-xl-blue tab-icon-bg transition-transform group-hover:scale-110">
+                    <i data-lucide="qr-code" class="w-5 h-5"></i>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="font-bold text-xs sm:text-sm leading-tight">Transfer eSIM</div>
+                    <div class="text-[10px] opacity-75 hidden md:block mt-0.5">Migrasi / Ganti HP</div>
+                </div>
+            </button>
+
+            <!-- Tab 5: Track Tiket -->
+            <button id="tab-track-tiket" onclick="switchTab('track-tiket')" class="service-tab group col-span-2 sm:col-span-1 flex flex-col sm:flex-row items-center justify-center sm:justify-start space-y-1.5 sm:space-y-0 sm:space-x-3 p-3.5 rounded-xl text-left transition-all duration-300 text-slate-600 hover:bg-xl-lightblue/60 hover:text-xl-blue">
+                <div class="p-2.5 rounded-xl bg-slate-100 text-xl-blue tab-icon-bg transition-transform group-hover:scale-110">
+                    <i data-lucide="ticket" class="w-5 h-5"></i>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="font-bold text-xs sm:text-sm leading-tight">Track Tiket</div>
+                    <div class="text-[10px] opacity-75 hidden md:block mt-0.5">Cek Status Pengajuan</div>
+                </div>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Dynamic Breadcrumb & Progress Stepper -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-7 bg-white/80 backdrop-blur-sm px-4 py-3 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div class="flex items-center space-x-1.5 text-xs text-slate-500 overflow-x-auto">
+                <i data-lucide="globe" class="w-3.5 h-3.5 text-xl-blue shrink-0"></i>
+                <span>xlcenter.xl.co.id</span>
+                <span>/</span>
+                <span>home</span>
+                <span>/</span>
+                <span>simcard-services</span>
+                <span>/</span>
+                <span id="breadcrumb-slug" class="font-bold text-xl-blue bg-xl-lightblue px-2 py-0.5 rounded-md">replacement</span>
+            </div>
+            
+            <!-- Mini 3-Step Visual Indicator -->
+            <div class="flex items-center space-x-2 text-[11px] font-semibold text-slate-600">
+                <span class="flex items-center text-xl-blue"><span class="w-4 h-4 rounded-full bg-xl-blue text-white inline-flex items-center justify-center text-[10px] mr-1">1</span> Isi Data</span>
+                <i data-lucide="chevron-right" class="w-3 h-3 text-slate-400"></i>
+                <span class="flex items-center"><span class="w-4 h-4 rounded-full bg-slate-200 text-slate-600 inline-flex items-center justify-center text-[10px] mr-1">2</span> Verifikasi</span>
+                <i data-lucide="chevron-right" class="w-3 h-3 text-slate-400"></i>
+                <span class="flex items-center"><span class="w-4 h-4 rounded-full bg-slate-200 text-slate-600 inline-flex items-center justify-center text-[10px] mr-1">3</span> Kartu Aktif</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Column: Forms & Interactive Views (8 cols) -->
+            <div class="lg:col-span-8">
+
+                <!-- ========================================================= -->
+                <!-- 1. VIEW: REPLACEMENT (GANTI KARTU HILANG / RUSAK)         -->
+                <!-- ========================================================= -->
+                <div id="view-replacement" class="service-view view-animate bg-white rounded-3xl shadow-md shadow-slate-200/60 border border-slate-100 p-6 sm:p-8">
+                    <div class="flex items-start justify-between border-b border-slate-100 pb-5 mb-6">
+                        <div>
+                            <span class="inline-flex items-center space-x-1 text-xs font-bold uppercase tracking-wider text-xl-teal bg-teal-50 border border-teal-100 px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-xl-teal"></span>
+                                <span>SIM Replacement</span>
+                            </span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2.5">Penggantian Kartu SIM (Hilang / Rusak)</h2>
+                            <p class="text-sm text-slate-500 mt-1">Ajukan penggantian kartu fisik Anda tanpa mengubah nomor telepon, pulsa, maupun paket lama.</p>
+                        </div>
+                        <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-gradient-to-br from-xl-lightblue to-blue-100 text-xl-blue items-center justify-center shrink-0 shadow-inner">
+                            <i data-lucide="sim-card" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleServiceSubmit(event, 'replacement')" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor XL yang Diganti <span class="text-red-500">*</span></label>
+                                <div class="relative group">
+                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500 font-bold text-sm border-r border-slate-200 pr-2.5 my-2">+62</span>
+                                    <input type="tel" name="msisdn" oninput="updateLiveCardNumber(this.value)" required placeholder="817xxxxxxx" pattern="[0-9]{9,13}" class="w-full pl-16 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm font-medium">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alasan Penggantian <span class="text-red-500">*</span></label>
+                                <select name="reason" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm bg-white font-medium">
+                                    <option value="">-- Pilih Alasan --</option>
+                                    <option value="Kartu Rusak / Tidak Terbaca">Kartu SIM Rusak / Tidak Terbaca</option>
+                                    <option value="Kartu Hilang / Dicuri">Kartu SIM Hilang / HP Hilang</option>
+                                    <option value="Ubah Ukuran Nano/Micro">Ubah Ukuran SIM (Micro/Nano)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">NIK (Nomor Induk Kependudukan) <span class="text-red-500">*</span></label>
+                                <input type="text" name="nik" required maxlength="16" minlength="16" placeholder="16 digit NIK sesuai KTP" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor KK (Kartu Keluarga) <span class="text-red-500">*</span></label>
+                                <input type="text" name="kk" required maxlength="16" minlength="16" placeholder="16 digit Nomor KK" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Metode Pengambilan Kartu Baru <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                <label class="border-2 border-slate-200 rounded-2xl p-4 flex items-start space-x-3 cursor-pointer hover:border-xl-blue/60 transition-all has-[:checked]:border-xl-blue has-[:checked]:bg-xl-lightblue/40 has-[:checked]:shadow-sm">
+                                    <input type="radio" name="delivery" value="Kirim Kurir ke Alamat" checked onchange="toggleAddressField('rep-address', true)" class="mt-1 text-xl-blue focus:ring-xl-blue">
+                                    <div>
+                                        <div class="font-bold text-sm text-slate-800 flex items-center gap-1.5">
+                                            <span>Kirim via Kurir</span>
+                                            <span class="text-[10px] bg-xl-teal/15 text-teal-700 px-1.5 py-0.5 rounded font-bold">Populer</span>
+                                        </div>
+                                        <div class="text-xs text-slate-500 mt-0.5">Kartu dikirim langsung ke alamat rumah Anda</div>
+                                    </div>
+                                </label>
+                                <label class="border-2 border-slate-200 rounded-2xl p-4 flex items-start space-x-3 cursor-pointer hover:border-xl-blue/60 transition-all has-[:checked]:border-xl-blue has-[:checked]:bg-xl-lightblue/40 has-[:checked]:shadow-sm">
+                                    <input type="radio" name="delivery" value="Ambil di XL Center" onchange="toggleAddressField('rep-address', false)" class="mt-1 text-xl-blue focus:ring-xl-blue">
+                                    <div>
+                                        <div class="font-bold text-sm text-slate-800">Ambil di XL Center</div>
+                                        <div class="text-xs text-slate-500 mt-0.5">Booking antrean prioritas di gerai terdekat</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="rep-address" class="transition-all">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat Lengkap Pengiriman <span class="text-red-500">*</span></label>
+                            <textarea name="address" rows="2" required placeholder="Nama Jalan, No. Rumah, RT/RW, Kecamatan, Kota, Kode Pos" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Aktif <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor Kontak Alternatif (WA) <span class="text-red-500">*</span></label>
+                                <input type="tel" name="alt_phone" required placeholder="08xxxxxxxxxx" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div class="pt-3">
+                            <button type="submit" class="group w-full bg-gradient-to-r from-xl-blue to-xl-vibrant hover:from-xl-darkblue hover:to-xl-blue text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-900/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
+                                <span>Ajukan Penggantian Kartu</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- 2. VIEW: REACTIVATION (REAKTIVASI KARTU HANGUS)           -->
+                <!-- ========================================================= -->
+                <div id="view-reactivation" class="service-view hidden bg-white rounded-3xl shadow-md shadow-slate-200/60 border border-slate-100 p-6 sm:p-8">
+                    <div class="flex items-start justify-between border-b border-slate-100 pb-5 mb-6">
+                        <div>
+                            <span class="inline-flex items-center space-x-1 text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200/70 px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                <span>SIM Reactivation</span>
+                            </span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2.5">Reaktivasi Kartu XL Hangus</h2>
+                            <p class="text-sm text-slate-500 mt-1">Aktifkan kembali nomor XL Anda yang melewati masa tenggang (maksimal 60 hari setelah hangus).</p>
+                        </div>
+                        <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 items-center justify-center shrink-0">
+                            <i data-lucide="refresh-cw" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-amber-50 to-orange-50/70 border border-amber-200/80 rounded-2xl p-4 mb-6 flex items-start space-x-3">
+                        <i data-lucide="info" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+                        <div class="text-xs text-amber-950 leading-relaxed">
+                            <strong>Penting:</strong> Pastikan Anda masih memegang fisik kartu SIM lama (atau mengetahui nomor seri ICCID 16-20 digit di belakang kartu) serta menggunakan data NIK & KK yang sama saat registrasi awal.
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleServiceSubmit(event, 'reactivation')" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor XL yang Hangus <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500 font-bold text-sm border-r border-slate-200 pr-2.5 my-2">+62</span>
+                                    <input type="tel" name="msisdn" oninput="updateLiveCardNumber(this.value)" required placeholder="818xxxxxxx" class="w-full pl-16 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm font-medium">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor Seri Kartu (ICCID) <span class="text-red-500">*</span></label>
+                                <input type="text" name="iccid" required placeholder="Contoh: 896211xxxxxxxxxxxx" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">NIK Pemilik Sebelumnya <span class="text-red-500">*</span></label>
+                                <input type="text" name="nik" required maxlength="16" minlength="16" placeholder="16 digit NIK sesuai KTP" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor KK Pemilik Sebelumnya <span class="text-red-500">*</span></label>
+                                <input type="text" name="kk" required maxlength="16" minlength="16" placeholder="16 digit Nomor KK" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Aktif <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor WhatsApp Aktif <span class="text-red-500">*</span></label>
+                                <input type="tel" name="alt_phone" required placeholder="08xxxxxxxxxx" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div class="pt-3">
+                            <button type="submit" class="group w-full bg-gradient-to-r from-xl-blue to-xl-vibrant hover:from-xl-darkblue hover:to-xl-blue text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-900/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
+                                <span>Ajukan Reaktivasi Nomor</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- 3. VIEW: UPGRADE (UPGRADE KARTU 3G KE 4G LTE)             -->
+                <!-- ========================================================= -->
+                <div id="view-upgrade" class="service-view hidden bg-white rounded-3xl shadow-md shadow-slate-200/60 border border-slate-100 p-6 sm:p-8">
+                    <div class="flex items-start justify-between border-b border-slate-100 pb-5 mb-6">
+                        <div>
+                            <span class="inline-flex items-center space-x-1 text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                <span>4G SIM Upgrade</span>
+                            </span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2.5">Upgrade Kartu SIM ke 4G LTE</h2>
+                            <p class="text-sm text-slate-500 mt-1">Nikmati internet super cepat jaringan XL 4.5G tanpa ganti nomor lama Anda.</p>
+                        </div>
+                        <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 items-center justify-center shrink-0">
+                            <i data-lucide="zap" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleServiceSubmit(event, 'upgrade')" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Pilih Metode Upgrade <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                <label class="border-2 border-slate-200 rounded-2xl p-4 flex items-start space-x-3 cursor-pointer hover:border-xl-blue/60 transition-all has-[:checked]:border-xl-blue has-[:checked]:bg-xl-lightblue/40">
+                                    <input type="radio" name="upgrade_type" value="Sudah Punya Kartu Upgrade 4G" checked onchange="toggleUpgradeMethod(true)" class="mt-1 text-xl-blue focus:ring-xl-blue">
+                                    <div>
+                                        <div class="font-bold text-sm text-slate-800">Sudah Punya Kartu Kosong 4G</div>
+                                        <div class="text-xs text-slate-500 mt-0.5">Aktivasi mandiri menggunakan kartu upgrade yang sudah dibeli</div>
+                                    </div>
+                                </label>
+                                <label class="border-2 border-slate-200 rounded-2xl p-4 flex items-start space-x-3 cursor-pointer hover:border-xl-blue/60 transition-all has-[:checked]:border-xl-blue has-[:checked]:bg-xl-lightblue/40">
+                                    <input type="radio" name="upgrade_type" value="Minta Kirim Kartu Upgrade 4G" onchange="toggleUpgradeMethod(false)" class="mt-1 text-xl-blue focus:ring-xl-blue">
+                                    <div>
+                                        <div class="font-bold text-sm text-slate-800">Kirim Kartu 4G ke Rumah</div>
+                                        <div class="text-xs text-slate-500 mt-0.5">Gratis pengiriman kartu upgrade 4G ke alamat Anda</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor XL Lama (3G) <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500 font-bold text-sm border-r border-slate-200 pr-2.5 my-2">+62</span>
+                                    <input type="tel" name="msisdn" oninput="updateLiveCardNumber(this.value)" required placeholder="819xxxxxxx" class="w-full pl-16 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm font-medium">
+                                </div>
+                            </div>
+                            <div id="upgrade-iccid-box">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">ICCID Kartu 4G Baru <span class="text-red-500">*</span></label>
+                                <input type="text" name="new_iccid" placeholder="16-20 digit di kemasan kartu 4G baru" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div id="upgrade-address-box" class="hidden">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat Pengiriman Kartu 4G <span class="text-red-500">*</span></label>
+                            <textarea name="address" rows="2" placeholder="Masukkan alamat lengkap pengiriman..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">NIK Sesuai KTP <span class="text-red-500">*</span></label>
+                                <input type="text" name="nik" required maxlength="16" minlength="16" placeholder="16 digit NIK" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Konfirmasi <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div class="pt-3">
+                            <button type="submit" class="group w-full bg-gradient-to-r from-xl-blue to-xl-vibrant hover:from-xl-darkblue hover:to-xl-blue text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-900/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
+                                <span>Proses Upgrade Kartu 4G</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- 4. VIEW: TRANSFER ESIM (MIGRASI FISIK KE ESIM / PINDAH HP) -->
+                <!-- ========================================================= -->
+                <div id="view-transfer-esim" class="service-view hidden bg-white rounded-3xl shadow-md shadow-slate-200/60 border border-slate-100 p-6 sm:p-8">
+                    <div class="flex items-start justify-between border-b border-slate-100 pb-5 mb-6">
+                        <div>
+                            <span class="inline-flex items-center space-x-1 text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200/70 px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                                <span>eSIM Services</span>
+                            </span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2.5">Transfer & Migrasi ke eSIM XL</h2>
+                            <p class="text-sm text-slate-500 mt-1">Ubah kartu SIM fisik menjadi eSIM atau pindahkan profil eSIM ke perangkat smartphone baru Anda.</p>
+                        </div>
+                        <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 items-center justify-center shrink-0">
+                            <i data-lucide="qr-code" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleServiceSubmit(event, 'transfer-esim')" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Jenis Layanan eSIM <span class="text-red-500">*</span></label>
+                                <select name="esim_type" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm bg-white font-medium">
+                                    <option value="Migrasi SIM Fisik ke eSIM">Migrasi SIM Fisik ke eSIM</option>
+                                    <option value="Transfer eSIM ke HP Baru">Transfer eSIM ke Perangkat Baru</option>
+                                    <option value="Request Ulang QR Code eSIM">Request Ulang QR Code eSIM</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor XL Anda <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500 font-bold text-sm border-r border-slate-200 pr-2.5 my-2">+62</span>
+                                    <input type="tel" name="msisdn" oninput="updateLiveCardNumber(this.value)" required placeholder="878xxxxxxx" class="w-full pl-16 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm font-medium">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor EID Perangkat Tujuan <span class="text-red-500">*</span></label>
+                                <input type="text" name="eid" required maxlength="32" minlength="32" placeholder="32 digit EID (Cek di *#06#)" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm font-mono">
+                                <p class="text-[11px] text-slate-500 mt-1.5 flex items-center gap-1">
+                                    <i data-lucide="smartphone" class="w-3 h-3 text-xl-blue"></i>
+                                    <span>Ketik <strong>*#06#</strong> pada dial pad HP baru untuk melihat EID.</span>
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tipe Smartphone Tujuan <span class="text-red-500">*</span></label>
+                                <input type="text" name="device" required placeholder="Contoh: iPhone 15 Pro / Samsung S24" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">NIK Terdaftar <span class="text-red-500">*</span></label>
+                                <input type="text" name="nik" required maxlength="16" minlength="16" placeholder="16 digit NIK" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Pengiriman QR eSIM <span class="text-red-500">*</span></label>
+                                <input type="email" name="email" required placeholder="QR Code dikirim ke email ini" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm">
+                            </div>
+                        </div>
+
+                        <div class="pt-3">
+                            <button type="submit" class="group w-full bg-gradient-to-r from-xl-blue to-xl-vibrant hover:from-xl-darkblue hover:to-xl-blue text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-900/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2">
+                                <span>Ajukan Transfer eSIM</span>
+                                <i data-lucide="qr-code" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- 5. VIEW: TRACK TIKET (LACAK STATUS PENGAJUAN)             -->
+                <!-- ========================================================= -->
+                <div id="view-track-tiket" class="service-view hidden bg-white rounded-3xl shadow-md shadow-slate-200/60 border border-slate-100 p-6 sm:p-8">
+                    <div class="flex items-start justify-between border-b border-slate-100 pb-5 mb-6">
+                        <div>
+                            <span class="inline-flex items-center space-x-1 text-xs font-bold uppercase tracking-wider text-xl-blue bg-xl-lightblue border border-blue-200/70 px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-xl-blue"></span>
+                                <span>Ticket Tracking</span>
+                            </span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2.5">Lacak Status Tiket Layanan</h2>
+                            <p class="text-sm text-slate-500 mt-1">Pantau progres pengajuan ganti kartu, reaktivasi, upgrade 4G, atau eSIM Anda secara real-time.</p>
+                        </div>
+                        <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-xl-lightblue text-xl-blue items-center justify-center shrink-0">
+                            <i data-lucide="ticket" class="w-7 h-7"></i>
+                        </div>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <form onsubmit="handleTrackTicket(event)" class="flex flex-col sm:flex-row gap-3 mb-5">
+                        <div class="relative flex-grow">
+                            <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                            <input type="text" id="track-input" required placeholder="Masukkan Nomor Tiket (cth: XLC-2026-8841) atau No. XL" class="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-slate-300 focus:ring-4 focus:ring-xl-blue/15 focus:border-xl-blue outline-none transition text-sm font-semibold uppercase">
+                        </div>
+                        <button type="submit" class="bg-gradient-to-r from-xl-blue to-xl-vibrant hover:from-xl-darkblue hover:to-xl-blue text-white font-bold px-7 py-3.5 rounded-2xl shadow-md hover:shadow-lg transition shrink-0 flex items-center justify-center space-x-2">
+                            <span>Cek Status</span>
+                        </button>
+                    </form>
+
+                    <!-- Demo Quick Chips -->
+                    <div class="mb-6 flex flex-wrap items-center gap-2 text-xs">
+                        <span class="text-slate-500 font-medium">Klik untuk coba tiket demo:</span>
+                        <button type="button" onclick="quickTrack('XLC-2026-8841')" class="bg-slate-100 hover:bg-xl-blue text-slate-700 hover:text-white font-mono font-bold px-3 py-1.5 rounded-xl transition shadow-2xs">XLC-2026-8841</button>
+                        <button type="button" onclick="quickTrack('XLC-2026-9920')" class="bg-slate-100 hover:bg-xl-blue text-slate-700 hover:text-white font-mono font-bold px-3 py-1.5 rounded-xl transition shadow-2xs">XLC-2026-9920</button>
+                    </div>
+
+                    <!-- Ticket Result Container -->
+                    <div id="ticket-result-container" class="hidden border border-slate-200/90 rounded-2xl p-5 sm:p-6 bg-gradient-to-b from-slate-50 to-white shadow-inner view-animate">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/80 pb-4 mb-5">
+                            <div>
+                                <div class="text-xs text-slate-500 font-medium">Nomor Tiket Pengajuan</div>
+                                <div id="res-ticket-id" class="text-xl font-black font-mono text-xl-blue tracking-tight">XLC-2026-8841</div>
+                            </div>
+                            <span id="res-status-badge" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-100 text-xl-blue shadow-2xs">
+                                Dalam Proses Verifikasi
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6 text-sm bg-white p-4 rounded-xl border border-slate-100">
+                            <div>
+                                <div class="text-xs text-slate-400">Jenis Layanan</div>
+                                <div id="res-service-name" class="font-bold text-slate-800 mt-0.5">Ganti Kartu SIM</div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">Nomor XL</div>
+                                <div id="res-msisdn" class="font-bold text-slate-800 mt-0.5">+62 817-1234-5678</div>
+                            </div>
+                            <div class="col-span-2 sm:col-span-1">
+                                <div class="text-xs text-slate-400">Tanggal Pengajuan</div>
+                                <div id="res-date" class="font-bold text-slate-800 mt-0.5">22 Nov 2026</div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Progress -->
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Riwayat Progres Real-Time</h4>
+                            <div id="res-timeline" class="relative pl-6 border-l-2 border-xl-blue space-y-5">
+                                <!-- Filled dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Not Found State -->
+                    <div id="ticket-not-found" class="hidden text-center py-10 px-4 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50/50 view-animate">
+                        <div class="w-14 h-14 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto mb-3 shadow-xs">
+                            <i data-lucide="search-x" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base">Tiket Tidak Ditemukan</h3>
+                        <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">Pastikan nomor tiket atau nomor telepon XL yang Anda masukkan sudah benar sesuai bukti pengajuan.</p>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- BAGIAN VISI & MISI T-STORE × XL CENTER                    -->
+                <!-- ========================================================= -->
+                <div class="mt-8 bg-white rounded-3xl shadow-md shadow-slate-200/60 border border-slate-100 p-6 sm:p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-xl-lightblue/80 to-transparent rounded-bl-full pointer-events-none"></div>
+                    
+                    <div class="flex items-center space-x-3 mb-6 relative z-10">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-xl-blue to-xl-vibrant text-white flex items-center justify-center shadow-md shadow-blue-900/20">
+                            <i data-lucide="compass" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-extrabold uppercase tracking-wider text-xl-teal">Tentang Kami</span>
+                            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900">Visi & Misi T-STORE × XL Center</h3>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 relative z-10">
+                        <!-- Visi -->
+                        <div class="bg-gradient-to-br from-xl-darkblue via-xl-blue to-indigo-800 text-white rounded-2xl p-5 sm:p-6 shadow-lg shadow-blue-950/20 flex flex-col justify-between">
+                            <div>
+                                <div class="inline-flex items-center space-x-1.5 bg-white/15 px-3 py-1 rounded-full text-xs font-bold text-teal-300 mb-3">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                                    <span>VISI KAMI</span>
+                                </div>
+                                <p class="text-sm sm:text-[15px] leading-relaxed font-medium text-blue-50">
+                                    "Menjadi mitra layanan telekomunikasi digital terdepan dan terpercaya di Indonesia yang menghadirkan solusi pengelolaan kartu SIM & eSIM secara instan, aman, dan tanpa batas."
+                                </p>
+                            </div>
+                            <div class="mt-5 pt-3 border-t border-white/15 flex items-center justify-between text-[11px] text-blue-200">
+                                <span>T-STORE Digital Service</span>
+                                <span class="font-bold text-teal-300">#KoneksiTanpaHenti</span>
+                            </div>
+                        </div>
+
+                        <!-- Misi -->
+                        <div class="bg-slate-50/90 border border-slate-200/80 rounded-2xl p-5 sm:p-6">
+                            <div class="inline-flex items-center space-x-1.5 bg-xl-lightblue text-xl-blue px-3 py-1 rounded-full text-xs font-bold mb-3.5">
+                                <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                                <span>MISI KAMI</span>
+                            </div>
+                            <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+                                <li class="flex items-start space-x-2.5">
+                                    <span class="w-5 h-5 rounded-full bg-xl-teal/20 text-teal-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                                    <span>Memberikan proses ganti kartu, reaktivasi, dan migrasi eSIM yang cepat serta bebas antre.</span>
+                                </li>
+                                <li class="flex items-start space-x-2.5">
+                                    <span class="w-5 h-5 rounded-full bg-xl-teal/20 text-teal-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                                    <span>Menjamin keamanan data kependudukan (NIK/KK) serta keutuhan nomor, pulsa, dan paket pelanggan.</span>
+                                </li>
+                                <li class="flex items-start space-x-2.5">
+                                    <span class="w-5 h-5 rounded-full bg-xl-teal/20 text-teal-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                                    <span>Menyediakan pendampingan responsif melalui layanan WhatsApp Admin T-STORE yang ramah dan solutif.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Info, Requirements, FAQ Accordion & Helpdesk (4 cols) -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <!-- Card: Syarat & Ketentuan Dinamis -->
+                <div class="bg-white rounded-3xl shadow-md shadow-slate-200/50 border border-slate-100 p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-9 h-9 rounded-xl bg-xl-lightblue text-xl-blue flex items-center justify-center">
+                            <i data-lucide="file-check-2" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-base">Dokumen & Syarat</h3>
+                    </div>
+                    <ul id="sidebar-requirements" class="space-y-3.5 text-xs sm:text-sm text-slate-600">
+                        <li class="flex items-start space-x-2.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-xl-teal shrink-0 mt-0.5"></i>
+                            <span>e-KTP asli & Nomor Kartu Keluarga (KK) yang terdaftar pada nomor XL.</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-xl-teal shrink-0 mt-0.5"></i>
+                            <span>Biaya penggantian kartu fisik gratis (hanya ongkos kirim jika via kurir).</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-xl-teal shrink-0 mt-0.5"></i>
+                            <span>Pulsa, paket internet, dan masa aktif tetap aman dan tidak hilang.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card: FAQ Interaktif (Accordion) -->
+                <div class="bg-white rounded-3xl shadow-md shadow-slate-200/50 border border-slate-100 p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <i data-lucide="help-circle" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-base">Pertanyaan Umum</h3>
+                    </div>
+                    <div class="divide-y divide-slate-100 text-xs sm:text-sm">
+                        <div class="py-2.5">
+                            <button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between text-left font-bold text-slate-800 hover:text-xl-blue transition">
+                                <span>Apakah pulsa & kuota akan hilang?</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform duration-200"></i>
+                            </button>
+                            <p class="hidden text-xs text-slate-500 mt-2 leading-relaxed">Tidak. Seluruh sisa pulsa, kuota internet, dan masa aktif otomatis berpindah ke kartu baru atau eSIM Anda.</p>
+                        </div>
+                        <div class="py-2.5">
+                            <button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between text-left font-bold text-slate-800 hover:text-xl-blue transition">
+                                <span>Berapa lama pengiriman kartu fisik?</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform duration-200"></i>
+                            </button>
+                            <p class="hidden text-xs text-slate-500 mt-2 leading-relaxed">Estimasi pengiriman kurir adalah 1–3 hari kerja untuk area Jabodetabek & kota besar, serta 2–5 hari kerja untuk luar pulau.</p>
+                        </div>
+                        <div class="pt-2.5">
+                            <button type="button" onclick="toggleFaq(this)" class="w-full flex items-center justify-between text-left font-bold text-slate-800 hover:text-xl-blue transition">
+                                <span>Bagaimana cara cek dukungan eSIM?</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform duration-200"></i>
+                            </button>
+                            <p class="hidden text-xs text-slate-500 mt-2 leading-relaxed">Buka menu Telepon lalu tekan <strong>*#06#</strong>. Jika muncul nomor <strong>EID (32 digit)</strong>, perangkat Anda mendukung eSIM XL.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card: Jam Operasional & SLA -->
+                <div class="bg-gradient-to-br from-xl-darkblue via-slate-900 to-slate-950 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-xl-teal/20 blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between mb-3 relative z-10">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-xl-teal">Estimasi Proses</span>
+                        <i data-lucide="clock" class="w-4 h-4 text-teal-300"></i>
+                    </div>
+                    <div class="text-xl font-extrabold mb-1 relative z-10">1 x 24 Jam Kerja</div>
+                    <p class="text-xs text-slate-300 leading-relaxed mb-4 relative z-10">
+                        Tim verifikasi T-STORE & XL Center memproses pengajuan setiap hari pukul 08.00 – 20.00 WIB.
+                    </p>
+                    <div class="border-t border-white/15 pt-4 flex flex-col gap-2.5 text-xs relative z-10">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400">WhatsApp Admin T-STORE:</span>
+                            <span class="font-bold text-teal-300 font-mono">0895-1909-7381</span>
+                        </div>
+                        <a href="https://wa.me/6289519097381?text=Halo%20Admin%20T-STORE,%20saya%20ingin%20konsultasi%20layanan%20Kartu%20SIM%20XL." target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 transition shadow-md">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>Hubungi WA Admin Sekarang</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating WhatsApp Admin T-STORE Button -->
+    <a href="https://wa.me/6289519097381?text=Halo%20Admin%20T-STORE,%20saya%20butuh%20bantuan%20layanan%20Kartu%20SIM%20XL." target="_blank" rel="noopener noreferrer" title="Chat WhatsApp Admin T-STORE" class="fixed bottom-5 right-5 z-40 group flex items-center space-x-2.5 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-4 py-3.5 rounded-full shadow-2xl shadow-emerald-900/35 hover:scale-105 transition-all duration-300">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+        <div class="text-left pr-1">
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-emerald-100 leading-none">T-STORE Admin</div>
+            <div class="text-xs font-extrabold leading-tight mt-0.5">0895-1909-7381</div>
+        </div>
+    </a>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200/80 mt-12 py-8 px-4 pb-24 sm:pb-8">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <img src="https://g.top4top.io/p_39783qegd1.png" alt="Logo T-STORE" onerror="this.onerror=null; this.src='https://placehold.co/48x48/002DBB/FFFFFF?text=XL';" class="w-7 h-7 rounded-lg object-contain border border-slate-200 p-0.5 bg-white">
+                <span class="font-bold text-slate-800">T-STORE × XL Center</span>
+                <span>•</span>
+                <a href="https://wa.me/6289519097381" target="_blank" rel="noopener noreferrer" class="font-bold text-emerald-600 hover:underline">WA Admin: +62 895-1909-7381</a>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 font-medium">
+                <button onclick="switchTab('replacement')" class="hover:text-xl-blue transition">Ganti Kartu</button>
+                <button onclick="switchTab('reactivation')" class="hover:text-xl-blue transition">Reaktivasi</button>
+                <button onclick="switchTab('upgrade')" class="hover:text-xl-blue transition">Upgrade 4G</button>
+                <button onclick="switchTab('transfer-esim')" class="hover:text-xl-blue transition">Transfer eSIM</button>
+                <button onclick="switchTab('track-tiket')" class="hover:text-xl-blue transition">Track Tiket</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Sukses Pengajuan (Pengganti alert) -->
+    <div id="success-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl transform transition-all text-center view-animate">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <i data-lucide="check-circle" class="w-9 h-9"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-900">Pengajuan Berhasil Dikirim!</h3>
+            <p class="text-sm text-slate-500 mt-1.5">Simpan nomor tiket di bawah ini atau konfirmasi langsung ke WhatsApp Admin **T-STORE**.</p>
+            
+            <div class="bg-gradient-to-r from-xl-lightblue/70 to-slate-100 rounded-2xl p-4 my-5 border border-blue-200/60">
+                <div class="text-[11px] uppercase tracking-wider text-slate-500 font-bold">Nomor Tiket Anda</div>
+                <div class="flex items-center justify-center space-x-2 mt-1">
+                    <span id="modal-ticket-number" class="text-xl font-mono font-black text-xl-blue tracking-wide">XLC-2026-0000</span>
+                    <button onclick="copyTicketNumber()" title="Salin Nomor Tiket" class="p-2 rounded-xl bg-white hover:bg-xl-blue text-slate-600 hover:text-white border border-slate-200 transition shadow-2xs">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div id="copy-feedback" class="text-[11px] text-emerald-600 font-bold mt-1.5 hidden">Nomor tiket berhasil disalin!</div>
+            </div>
+
+            <div class="flex flex-col gap-2.5">
+                <a id="modal-wa-link" href="https://wa.me/6289519097381" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition flex items-center justify-center space-x-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>Konfirmasi ke WA Admin T-STORE</span>
+                </a>
+                <div class="flex flex-col sm:flex-row gap-2.5">
+                    <button onclick="goToTrackFromModal()" class="flex-1 bg-gradient-to-r from-xl-blue to-xl-vibrant hover:from-xl-darkblue hover:to-xl-blue text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition">
+                        Lacak Tiket
+                    </button>
+                    <button onclick="closeSuccessModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 px-4 rounded-xl text-sm transition">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Inisialisasi Lucide Icons
+        lucide.createIcons();
+
+        // Database Simulasi Tiket (Tersimpan di memori & localStorage)
+        const defaultTickets = {
+            "XLC-2026-8841": {
+                id: "XLC-2026-8841",
+                service: "Penggantian Kartu SIM (Replacement)",
+                msisdn: "+62 817-9921-4401",
+                date: "21 Nov 2026, 14:20 WIB",
+                status: "Dalam Pengiriman Kurir",
+                badgeClass: "bg-amber-100 text-amber-800",
+                steps: [
+                    { title: "Pengajuan Diterima Sistem", time: "21 Nov 2026, 14:20", desc: "Data NIK & KK berhasil divalidasi secara otomatis.", done: true },
+                    { title: "Verifikasi Agen XL Center", time: "21 Nov 2026, 15:05", desc: "Kartu SIM pengganti telah dicetak dan dipasangkan dengan nomor Anda.", done: true },
+                    { title: "Dikirim via Kurir Ekspedisi", time: "22 Nov 2026, 09:30", desc: "Paket kartu SIM sedang dalam perjalanan ke alamat tujuan.", done: true }
+                ]
+            },
+            "XLC-2026-9920": {
+                id: "XLC-2026-9920",
+                service: "Transfer & Migrasi ke eSIM",
+                msisdn: "+62 878-5510-3321",
+                date: "22 Nov 2026, 10:15 WIB",
+                status: "Selesai - QR Terkirim",
+                badgeClass: "bg-emerald-100 text-emerald-800",
+                steps: [
+                    { title: "Permintaan Transfer eSIM Diterima", time: "22 Nov 2026, 10:15", desc: "Validasi 32 digit EID perangkat tujuan berhasil.", done: true },
+                    { title: "QR Code eSIM Diterbitkan", time: "22 Nov 2026, 10:22", desc: "Profil eSIM telah dikirim ke email terdaftar. Silakan pindai QR Code.", done: true }
+                ]
+            }
+        };
+
+        let ticketDatabase = JSON.parse(localStorage.getItem('xl_tickets')) || defaultTickets;
+        let lastCreatedTicketId = "";
+
+        // Konten Syarat Dinamis per Tab
+        const serviceRequirements = {
+            'replacement': [
+                "e-KTP asli & Nomor Kartu Keluarga (KK) yang terdaftar pada nomor XL.",
+                "Biaya penggantian kartu fisik gratis (hanya ongkos kirim jika via kurir).",
+                "Pulsa, paket internet, dan masa aktif tetap aman dan tidak hilang."
+            ],
+            'reactivation': [
+                "Nomor XL dalam masa hangus maksimal 60 hari kalender.",
+                "Wajib menggunakan NIK & Nomor KK yang sama dengan registrasi sebelumnya.",
+                "Fisik kartu SIM lama masih ada dan nomor seri (ICCID) terbaca jelas."
+            ],
+            'upgrade': [
+                "Nomor XL masih aktif dan tidak dalam masa tenggang.",
+                "Perangkat smartphone sudah mendukung jaringan 4G LTE.",
+                "Dapatkan bonus kuota 4G setelah proses upgrade berhasil."
+            ],
+            'transfer-esim': [
+                "Smartphone tujuan wajib mendukung fitur eSIM (iPhone XS ke atas, Samsung S20 ke atas, dll).",
+                "Siapkan 32 digit nomor EID perangkat tujuan (cek melalui *#06#).",
+                "Pastikan koneksi Wi-Fi stabil saat memindai QR Code eSIM."
+            ],
+            'track-tiket': [
+                "Gunakan Nomor Tiket berawalan XLC-2026-XXXX yang dikirim via email/SMS.",
+                "Anda juga dapat melacak menggunakan nomor XL yang diajukan.",
+                "Hubungi 817 jika status tidak berubah lebih dari 1x24 jam kerja."
+            ]
+        };
+
+        // Fungsi Berpindah Tab Layanan
+        function switchTab(tabName) {
+            // Sembunyikan semua view
+            document.querySelectorAll('.service-view').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('view-animate');
+            });
+            
+            // Tampilkan view yang dipilih dengan animasi
+            const activeView = document.getElementById(`view-${tabName}`);
+            if (activeView) {
+                activeView.classList.remove('hidden');
+                void activeView.offsetWidth; // trigger reflow untuk animasi ulang
+                activeView.classList.add('view-animate');
+            }
+
+            // Update Breadcrumb URL
+            document.getElementById('breadcrumb-slug').textContent = tabName;
+
+            // Update Virtual SIM Preview Card di Hero
+            const serviceTitles = {
+                'replacement': 'Ganti Kartu SIM',
+                'reactivation': 'Reaktivasi Kartu',
+                'upgrade': 'Upgrade 4.5G LTE',
+                'transfer-esim': 'Digital eSIM XL',
+                'track-tiket': 'Lacak Status Tiket'
+            };
+            const liveServiceEl = document.getElementById('live-card-service');
+            if (liveServiceEl) liveServiceEl.textContent = serviceTitles[tabName] || 'Layanan XL';
+
+            // Update styling tombol tab
+            document.querySelectorAll('.service-tab').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-xl-blue', 'to-xl-vibrant', 'text-white', 'shadow-lg', 'shadow-blue-900/25');
+                btn.classList.add('text-slate-600', 'hover:bg-xl-lightblue/60', 'hover:text-xl-blue');
+                const iconBox = btn.querySelector('.tab-icon-bg') || btn.querySelector('div:first-child');
+                if (iconBox) {
+                    iconBox.classList.remove('bg-white/20');
+                    iconBox.classList.add('bg-slate-100', 'text-xl-blue');
+                }
+            });
+
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:bg-xl-lightblue/60', 'hover:text-xl-blue');
+                activeBtn.classList.add('bg-gradient-to-r', 'from-xl-blue', 'to-xl-vibrant', 'text-white', 'shadow-lg', 'shadow-blue-900/25');
+                const iconBox = activeBtn.querySelector('div:first-child');
+                if (iconBox) {
+                    iconBox.classList.remove('bg-slate-100', 'text-xl-blue');
+                    iconBox.classList.add('bg-white/20');
+                }
+            }
+
+            // Update Sidebar Syarat & Ketentuan
+            const reqList = document.getElementById('sidebar-requirements');
+            const items = serviceRequirements[tabName] || serviceRequirements['replacement'];
+            reqList.innerHTML = items.map(text => `
+                <li class="flex items-start space-x-2.5">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-xl-teal shrink-0 mt-0.5"></i>
+                    <span>${text}</span>
+                </li>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Update Real-Time Nomor pada Kartu SIM Virtual 3D
+        function updateLiveCardNumber(val) {
+            const display = document.getElementById('live-card-number');
+            if (!display) return;
+            const clean = val.replace(/\D/g, '').replace(/^0+/, '');
+            if (!clean) {
+                display.textContent = '+62 817-XXXX-XXXX';
+                return;
+            }
+            const formatted = clean.replace(/(\d{3})(\d{4})(\d{0,5})/, (m, p1, p2, p3) => {
+                return p3 ? `${p1}-${p2}-${p3}` : (p2 ? `${p1}-${p2}` : p1);
+            });
+            display.textContent = `+62 ${formatted}`;
+        }
+
+        // Toggle FAQ Accordion
+        function toggleFaq(btn) {
+            const answer = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            answer.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Toggle Alamat pada Replacement
+        function toggleAddressField(elementId, show) {
+            const el = document.getElementById(elementId);
+            const textarea = el.querySelector('textarea');
+            if (show) {
+                el.classList.remove('hidden');
+                textarea.setAttribute('required', 'required');
+            } else {
+                el.classList.add('hidden');
+                textarea.removeAttribute('required');
+            }
+        }
+
+        // Toggle Metode Upgrade 4G
+        function toggleUpgradeMethod(hasCard) {
+            const iccidBox = document.getElementById('upgrade-iccid-box');
+            const addrBox = document.getElementById('upgrade-address-box');
+            if (hasCard) {
+                iccidBox.classList.remove('hidden');
+                addrBox.classList.add('hidden');
+            } else {
+                iccidBox.classList.add('hidden');
+                addrBox.classList.remove('hidden');
+            }
+        }
+
+        // Submit Form Layanan
+        function handleServiceSubmit(event, serviceType) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const rawPhone = formData.get('msisdn').replace(/^0+/, '');
+            const formattedPhone = `+62 ${rawPhone}`;
+
+            const serviceLabels = {
+                'replacement': 'Penggantian Kartu SIM (Replacement)',
+                'reactivation': 'Reaktivasi Kartu Hangus',
+                'upgrade': 'Upgrade Kartu SIM 4G LTE',
+                'transfer-esim': 'Transfer & Migrasi eSIM'
+            };
+
+            // Generate Nomor Tiket Acak
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            const ticketId = `XLC-2026-${randomNum}`;
+            lastCreatedTicketId = ticketId;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + 
+                            ', ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+
+            // Simpan ke database tiket
+            ticketDatabase[ticketId] = {
+                id: ticketId,
+                service: serviceLabels[serviceType],
+                msisdn: formattedPhone,
+                date: dateStr,
+                status: "Menunggu Verifikasi Agen",
+                badgeClass: "bg-blue-100 text-xl-blue",
+                steps: [
+                    {
+                        title: "Pengajuan Berhasil Dibuat",
+                        time: dateStr,
+                        desc: "Formulir dan data kependudukan (NIK/KK) telah masuk ke antrean sistem XL Center.",
+                        done: true
+                    },
+                    {
+                        title: "Proses Validasi Data",
+                        time: "Estimasi < 2 Jam",
+                        desc: "Petugas XL Center sedang melakukan pengecekan validitas nomor dan perangkat.",
+                        done: false
+                    }
+                ]
+            };
+
+            localStorage.setItem('xl_tickets', JSON.stringify(ticketDatabase));
+
+            // Tampilkan Modal Sukses
+            document.getElementById('modal-ticket-number').textContent = ticketId;
+            const waText = encodeURIComponent(`Halo Admin T-STORE, saya sudah mengajukan layanan *${serviceLabels[serviceType]}* untuk nomor *${formattedPhone}* dengan Nomor Tiket: *${ticketId}*. Mohon dibantu prosesnya.`);
+            document.getElementById('modal-wa-link').href = `https://wa.me/6289519097381?text=${waText}`;
+            document.getElementById('copy-feedback').classList.add('hidden');
+            document.getElementById('success-modal').classList.remove('hidden');
+            form.reset();
+            updateLiveCardNumber('');
+        }
+
+        // Salin Nomor Tiket
+        function copyTicketNumber() {
+            const text = document.getElementById('modal-ticket-number').textContent;
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const feedback = document.getElementById('copy-feedback');
+            feedback.classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        function goToTrackFromModal() {
+            closeSuccessModal();
+            switchTab('track-tiket');
+            quickTrack(lastCreatedTicketId);
+        }
+
+        // Fitur Track Tiket
+        function quickTrack(query) {
+            document.getElementById('track-input').value = query;
+            searchTicket(query);
+        }
+
+        function handleTrackTicket(event) {
+            event.preventDefault();
+            const query = document.getElementById('track-input').value.trim();
+            searchTicket(query);
+        }
+
+        function searchTicket(query) {
+            const cleanQuery = query.toUpperCase().replace(/\s+/g, '');
+            const resultContainer = document.getElementById('ticket-result-container');
+            const notFoundContainer = document.getElementById('ticket-not-found');
+
+            // Cari berdasarkan ID tiket atau nomor telepon
+            let foundTicket = ticketDatabase[cleanQuery];
+            if (!foundTicket) {
+                foundTicket = Object.values(ticketDatabase).find(t => 
+                    t.msisdn.replace(/[^0-9]/g, '').includes(cleanQuery.replace(/^0+/, ''))
+                );
+            }
+
+            if (foundTicket) {
+                notFoundContainer.classList.add('hidden');
+                resultContainer.classList.remove('hidden');
+
+                document.getElementById('res-ticket-id').textContent = foundTicket.id;
+                document.getElementById('res-service-name').textContent = foundTicket.service;
+                document.getElementById('res-msisdn').textContent = foundTicket.msisdn;
+                document.getElementById('res-date').textContent = foundTicket.date;
+
+                const badge = document.getElementById('res-status-badge');
+                badge.textContent = foundTicket.status;
+                badge.className = `px-3 py-1 rounded-full text-xs font-bold ${foundTicket.badgeClass}`;
+
+                const timelineEl = document.getElementById('res-timeline');
+                timelineEl.innerHTML = foundTicket.steps.map(step => `
+                    <div class="relative">
+                        <span class="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full border-2 border-white ${step.done ? 'bg-xl-blue' : 'bg-slate-300'}"></span>
+                        <div class="flex flex-wrap items-center justify-between gap-1">
+                            <span class="font-bold text-sm ${step.done ? 'text-slate-900' : 'text-slate-500'}">${step.title}</span>
+                            <span class="text-[11px] font-medium text-slate-400">${step.time}</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mt-0.5">${step.desc}</p>
+                    </div>
+                `).join('');
+            } else {
+                resultContainer.classList.add('hidden');
+                notFoundContainer.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
